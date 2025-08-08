@@ -1,0 +1,24 @@
+# Use official Tomcat 10.1 base image
+FROM tomcat:10.1-jdk24
+
+# Remove default web apps
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+# Copy WAR file into Tomcat as ROOT.war
+COPY ROOT.war /usr/local/tomcat/webapps/ROOT.war
+
+# Copy json-simple-1.1.jar into Tomcat's lib folder
+COPY json-simple-1.1.jar /usr/local/tomcat/lib/
+
+# Environment variables for all APIs
+
+ENV ABSTRACT_EMAIL_API_KEY=34cbe738bb7348b78089ae649f5f045d
+ENV ABSTRACT_PHONE_API_KEY=eac57b41579e4bce95e2de2686d6a72d
+ENV ABSTRACT_COMPANY_API_KEY=9d1ff2f986924dba81db6c31b64b4612
+ENV IPINFO_API_KEY=88cc1d55b1119a
+
+# Expose port
+EXPOSE 8082
+
+# Start Tomcat
+CMD ["catalina.sh", "run"]
